@@ -1,22 +1,22 @@
 {
-  "name": "csv-lookup",
+  "name": "csv-lukup",
   "version": "1.0.0",
   "description": "Utility for loading a CSV file and looking up row data by header name",
-  "main": "csv-lookup.js",
+  "main": "csv-lukup.js",
   "scripts": {
     "babel": "babel --presets es2015 csv-lukup.js -o lib/csv-lukup.js",
     "test": "jasmine"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/valcas/csv-lookup.git"
+    "url": "git+https://github.com/valcas/csv-lukup.git"
   },
   "author": "Val Cassidy",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/valcas/csv-lookup/issues"
+    "url": "https://github.com/valcas/csv-lukup/issues"
   },
-  "homepage": "https://github.com/valcas/csv-lookup#readme",
+  "homepage": "https://github.com/valcas/csv-lukup#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
