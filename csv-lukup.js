@@ -1,4 +1,4 @@
-export default class CsvLookup {
+export default class CsvLukup {
 
     constructor(options)   {
         this.options = options;

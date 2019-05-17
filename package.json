@@ -4,7 +4,7 @@
   "description": "Utility for loading a CSV file and looking up row data by header name",
   "main": "csv-lookup.js",
   "scripts": {
-    "babel": "babel --presets es2015 csv-lookup.js -o lib/csv-lookup.js",
+    "babel": "babel --presets es2015 csv-lukup.js -o lib/csv-lukup.js",
     "test": "jasmine"
   },
   "repository": {
