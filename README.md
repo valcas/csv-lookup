@@ -21,3 +21,15 @@ while (lukup.next())  {
     console.log(fullname); // 'John Lennon', 'George Harrison', etc...
 }
 </pre>
+
+<b>Installation...</b>
+
+<pre>
+npm install valcas/csv-lukup#1.0.0
+</pre>
+
+<b>Usage...</b>
+
+<pre>
+import CsvLukup from 'csv-lukup';
+</pre>
