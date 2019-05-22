@@ -14,9 +14,11 @@ describe("A suite", function() {
       console.log(colnames);
 
       while (lukup.next())  {
+        var row = ''
         colnames.map(col => {
-          console.log(col + ': ' + lukup.getValue(col));
+          row += lukup.getValue(col) + ':';
         });
+        console.log(row.substring(0, row.length - 1));
       }
 
       console.log('done');

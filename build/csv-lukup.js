@@ -22,8 +22,8 @@ function () {
     this.options = options;
     this.config = new JsonConfig(options);
     this.delimiter = this.config.getValue('delimiter', ',');
-    this.headerRow = this.config.getValue('headerRow');
-    this.dataRow = this.config.getValue('dataRow', 0);
+    this.headerRow = this.config.getValue('headerRow', -1);
+    this.dataRow = this.config.getValue('dataRow', 1) + this.headerRow;
     this.trailerRows = this.config.getValue('trailerRows', 0);
   }
 
@@ -39,13 +39,18 @@ function () {
   }, {
     key: "readcsv",
     value: function readcsv(content) {
+      this.setNewLineChar(content);
+
       if (content.startsWith('sep=')) {
         content = content.substring(content.indexOf(this.newline)).trim();
       }
 
-      this.setNewLineChar(content);
       this.lines = content.split(this.newline);
-      this.readColNames();
+
+      if (this.headerRow > -1) {
+        this.readColNames();
+      }
+
       this.readDataLines();
       this.cursor = -1;
     }
@@ -63,7 +68,11 @@ function () {
   }, {
     key: "getValue",
     value: function getValue(colname) {
-      var index = this.colnames.indexOf(colname);
+      return this.rows[this.cursor][this.colnames.indexOf(colname)];
+    }
+  }, {
+    key: "getValueAt",
+    value: function getValueAt(index) {
       return this.rows[this.cursor][index];
     }
   }, {
@@ -115,7 +124,7 @@ function () {
     key: "readDataLines",
     value: function readDataLines() {
       var startRow = this.dataRow;
-      var endRow = this.lines.length - startRow - this.trailerRows;
+      var endRow = this.lines.length - startRow - this.trailerRows + this.headerRow;
       this.rows = [];
 
       for (var i = startRow; i <= endRow; i++) {

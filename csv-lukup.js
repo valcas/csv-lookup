@@ -6,8 +6,8 @@ export default class CsvLukup {
         this.options = options;
         this.config = new JsonConfig(options);
         this.delimiter = this.config.getValue('delimiter', ',');
-        this.headerRow = this.config.getValue('headerRow');
-        this.dataRow = this.config.getValue('dataRow', 0);
+        this.headerRow = this.config.getValue('headerRow', -1);
+        this.dataRow = this.config.getValue('dataRow', 1) + this.headerRow;
         this.trailerRows = this.config.getValue('trailerRows', 0);
     }
 
@@ -22,12 +22,14 @@ export default class CsvLukup {
     readcsv(content)  {
 
         this.setNewLineChar(content);
-        
+
         if (content.startsWith('sep=')) {
             content = content.substring(content.indexOf(this.newline)).trim();
         }
         this.lines = content.split(this.newline);
-        this.readColNames();
+        if (this.headerRow > -1) {
+            this.readColNames();
+        }
         this.readDataLines();
         this.cursor = -1;
 
@@ -43,7 +45,10 @@ export default class CsvLukup {
     }
 
     getValue(colname)   {
-        var index = this.colnames.indexOf(colname);
+        return this.rows[this.cursor][this.colnames.indexOf(colname)];
+    }
+
+    getValueAt(index)  {
         return this.rows[this.cursor][index];
     }
 
@@ -91,7 +96,7 @@ export default class CsvLukup {
 
     readDataLines() {
         var startRow = this.dataRow;
-        var endRow = this.lines.length - startRow - this.trailerRows;
+        var endRow = this.lines.length - startRow - this.trailerRows + this.headerRow;
         this.rows = [];
         for (var i = startRow; i <= endRow; i++)  {
             var tmp = this.lines[i];

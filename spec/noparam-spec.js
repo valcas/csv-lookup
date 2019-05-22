@@ -10,13 +10,8 @@ describe("A suite", function() {
       var lukup = new CsvLukup();
       lukup.readcsv(data);
 
-      var colnames = lukup.getColnames();
-      console.log(colnames);
-
       while (lukup.next())  {
-        colnames.map(col => {
-          console.log(col + ': ' + lukup.getValue(col));
-        });
+          console.log(lukup.getValueAt(0) + ":" + lukup.getValueAt(1));
       }
 
       console.log('done');
