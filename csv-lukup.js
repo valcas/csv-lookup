@@ -21,10 +21,11 @@ export default class CsvLukup {
 
     readcsv(content)  {
 
+        this.setNewLineChar(content);
+        
         if (content.startsWith('sep=')) {
             content = content.substring(content.indexOf(this.newline)).trim();
         }
-        this.setNewLineChar(content);
         this.lines = content.split(this.newline);
         this.readColNames();
         this.readDataLines();
