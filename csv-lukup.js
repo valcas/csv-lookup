@@ -1,20 +1,39 @@
+const JsonConfig = require('json-config/lib/json-config').default;
+
 export default class CsvLukup {
 
     constructor(options)   {
         this.options = options;
+        this.config = new JsonConfig(options);
+        this.delimiter = this.config.getValue('delimiter');
+        this.headerRow = this.config.getValue('headerRow');
+        this.dataRow = this.config.getValue('dataRow');
+        this.trailerRows = this.config.getValue('trailerRows');
     }
 
-    readfile(content)  {
-
-        content = atob(content.substring(content.indexOf(',') + 1, content.length));
-        if (content.startsWith('sep=')) {
-            content = content.substring(content.indexOf('\n')).trim();
+    setNewLineChar(content)    {
+        if (content.indexOf('\r\n') > -1)   {
+            this.newline = '\r\n';
+        } else {
+            this.newline = '\n';
         }
-        this.lines = content.split("\n");
+    }
+
+    readcsv(content)  {
+
+        if (content.startsWith('sep=')) {
+            content = content.substring(content.indexOf(this.newline)).trim();
+        }
+        this.setNewLineChar(content);
+        this.lines = content.split(this.newline);
         this.readColNames();
         this.readDataLines();
         this.cursor = -1;
 
+    }
+
+    getColnames()   {
+        return this.colnames;
     }
 
     next()  {
@@ -28,13 +47,13 @@ export default class CsvLukup {
     }
 
     readColNames()  {
-        var headerStr = this.lines[this.getOption('headerRow', 0)];
+        var headerStr = this.lines[this.headerRow];
         this.colnames = this.lineToArr(headerStr);
     }
 
     lineToArr(line) {
         
-        var tmpArr = line.split(',');
+        var tmpArr = line.split(this.delimiter);
         var fields = [];
         var tmpValue = null;
 
@@ -47,7 +66,7 @@ export default class CsvLukup {
                 }
             } else {
                 if (tmpValue)   {
-                    tmpValue += "," + field;
+                    tmpValue += this.delimiter + field;
                     if (field.endsWith('"'))    {
                         fields.push(this.stripFieldQuotes(tmpValue.substring(1, tmpValue.length - 1)));
                         tmpValue = null;
@@ -70,21 +89,13 @@ export default class CsvLukup {
     }
 
     readDataLines() {
-        var startRow = this.getOption('datarow', 1);
-        var endRow = this.lines.length - startRow - this.getOption('trailerRows', 0);
+        var startRow = this.dataRow;
+        var endRow = this.lines.length - startRow - this.trailerRows;
         this.rows = [];
         for (var i = startRow; i <= endRow; i++)  {
             var tmp = this.lines[i];
             var rowData = this.lineToArr(tmp);
             this.rows.push(rowData);
-        }
-    }
-
-    getOption(name, def) {
-        if (this.options[name]) {
-            return this.options[name];
-        } else {
-            return def;
         }
     }
 

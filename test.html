@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script>var exports = {};</script>
+        <script src="build/csv-lukup.js"></script>
+    </head>
+</html>
+<script>
+
+var data = `"firstname","lastname"
+"John","Lennon"
+"George","Harrison"
+"Paul","McCartney"
+"Ringo","Starr"`;
+
+var lukup = new CsvLukup();
+
+lukup.readcsv(data);
+
+var colnames = lukup.getColnames();
+console.log(colnames);
+
+while (lukup.next())  {
+  colnames.map(col => {
+    console.log(col + ': ' + lukup.getValue(col));
+  });
+}
+
+console.log('done');
+
+
+</script>

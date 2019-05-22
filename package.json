@@ -4,7 +4,8 @@
   "description": "Utility for loading a CSV file and looking up row data by header name",
   "main": "csv-lukup.js",
   "scripts": {
-    "babel": "babel --presets es2015 csv-lukup.js -o lib/csv-lukup.js",
+    "babel": "babel --presets env csv-lukup.js -o lib/csv-lukup.js",
+    "build": "babel csv-lukup.js -d build",
     "test": "jasmine"
   },
   "repository": {
@@ -18,11 +19,18 @@
   },
   "homepage": "https://github.com/valcas/csv-lukup#readme",
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "jasmine": "^3.4.0"
+    "babel-preset-env": "^1.7.0",
+    "jasmine": "^3.4.0",
+    "jasmine-node": "^1.16.2"
   },
   "dependencies": {
-    "babel-preset-es2015": "^6.24.1"
+    "@babel/polyfill": "^7.4.4",
+    "babel-preset-es2015": "^6.24.1",
+    "json-config": "github:valcas/json-config#v-1.0.0"
   }
 }

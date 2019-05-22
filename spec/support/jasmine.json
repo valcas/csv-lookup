@@ -4,7 +4,8 @@
     "**/*[sS]pec.js"
   ],
   "helpers": [
-    "helpers/**/*.js"
+    "helpers/**/*.js",
+    "./lib/csv-lukup.js"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": true
