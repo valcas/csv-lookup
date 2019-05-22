@@ -21,10 +21,10 @@ function () {
 
     this.options = options;
     this.config = new JsonConfig(options);
-    this.delimiter = this.config.getValue('delimiter');
+    this.delimiter = this.config.getValue('delimiter', ',');
     this.headerRow = this.config.getValue('headerRow');
-    this.dataRow = this.config.getValue('dataRow');
-    this.trailerRows = this.config.getValue('trailerRows');
+    this.dataRow = this.config.getValue('dataRow', 0);
+    this.trailerRows = this.config.getValue('trailerRows', 0);
   }
 
   _createClass(CsvLukup, [{
